@@ -1,4 +1,4 @@
-﻿// eval_func.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// eval_func.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
@@ -26,8 +26,8 @@ int allowedCells[size][size] = { { 0, 0, 1, 0, 1, 0, 1, 0, 0 },
 const int WHITE_SOLDIER = 10;
 const int RED_SOLDIER = 10;
 
-const char RED_SOLDIER = 'r';
-const char WHITE_SOLDIER = 'w';
+const char RED_SOLDIER_CH = 'r';
+const char WHITE_SOLDIER_CH = 'w';
 const char VOID_CELL = 'O';
 
 bool isWhiteSoldier(char soldier) {             //white soldiers
@@ -40,34 +40,76 @@ bool isRedSoldier(char soldier) {               //red soldiers
 bool isInSquare(int x, int y) {
     return (x >= 2 && x <= 6 && y >= 2 && y <= 6);
 }
+bool mainDiagonalParallel(int matrix[9][9]) {
+    
+    for (int i = 0; i < size; ++i) {                                //main diagonal
+        std::cout << matrix[i][i] << " ";
+    }
+    std::cout << std::endl;
 
-bool isOnBorder(int i, int j) {                 //check is soldier on border
-    return borderCells[i][j] == 1;
+   
+    for (int i = 0; i < size - 2; ++i) {                            //highук diagonal
+        std::cout << matrix[i][i + 2] << " ";
+    }
+   
+    for (int i = 2; i < size; ++i) {                                //lower diagonal
+        std::cout << matrix[i][i - 2] << " ";
+    }
 }
-bool isSefePosiotion(char board[size][size], char soldier, int i, int j) {
+int evalutate(int i, int j) {
+    int white = 0, red = 0;
+    return  white - red;
+}
 
-}
 int main()
 {
     std::cout << "Hello World!\n";
-    char board[9][9] = {{'O', 'O', 'r', 'O', 'r', 'O', 'r', 'O', 'O' },
-                        {'O', 'O', 'O', 'r', 'r', 'r', 'O', 'O', 'O' },
-                        {'r', 'O', 'r', 'r', 'r', 'r', 'r', 'O', 'O' },
-                        {'O', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'O' },
-                        {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r' },
-                        {'O', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'O' },
-                        {'r', 'O', 'r', 'r', 'r', 'r', 'r', 'O', 'O' },
-                        {'O', 'O', 'O', 'r', 'r', 'r', 'O', 'O', 'O' },
-                        {'O', 'O', 'r', 'O', 'r', 'O', 'r', 'O', 'O' }
+    int n = 9;
+    char matrix[9][9] = {   {'O', 'O', '1', 'O', '1', 'O', 'r', 'O', 'O' },
+                            {'O', 'O', 'O', '1', '1', '1', 'O', 'O', 'O' },
+                            {'1', 'O', '1', '1', '1', '1', '1', 'O', '1' },
+                            {'O', '1', '1', '1', '1', '1', '1', '1', 'O' },
+                            {'1', '1', '1', '1', '1', '1', '1', '1', '1' },
+                            {'O', '1', '1', '1', '1', '1', '1', '1', 'O' },
+                            {'1', 'O', '1', '1', '1', '1', '1', 'O', '1' },
+                            {'O', 'O', 'O', '1', '1', '1', 'O', 'O', 'O' },
+                            {'O', 'O', '1', 'O', '1', 'O', '1', 'O', 'O' } };
+    // Проход по диагоналям через одну вверх
+    std::cout << "Главная диагональ:" << std::endl;
+    for (int i = 0; i < size; ++i) {
+        std::cout << matrix[i][i] << " ";
+    }
+    std::cout << std::endl;
+    
+    std::cout << "Параллельная диагональ (3, 9, 15):" << std::endl;
+    for (int i = 0; i < size - 2; ++i) {
+        std::cout << matrix[i][i + 2] << " ";
+    }
+    std::cout << std::endl;
+    // Проход по диагоналям через одну вниз
+    std::cout << "Параллельная диагональ (11, 17, 23):" << std::endl;
+    for (int i = 2; i < size; ++i) {
+        std::cout << matrix[i][i - 2] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Главная диагональ:" << std::endl;
+    for (int i = 0; i < size; ++i) {
+        std::cout << matrix[i][size - i - 1] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Побочная диагональ (3, 9, 15):" << std::endl;
+    for (int i = 0; i < size - 2; ++i) {
+        std::cout << matrix[i][size - i - 3] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Побочная диагональ (11, 17, 23):" << std::endl;
+    for (int i = 2; i < size; ++i) {
+        std::cout << matrix[i][size - i + 3] << " ";
+    }
+    std::cout << std::endl;
+
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
